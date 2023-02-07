@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lesson-ArchitecturePatterns</string>
+    <string-array name="recommendations">
+        <item>Не выполняйте упражнения через боль!</item>
+        <item>Если Вы устали сделайте перерыв.</item>
+        <item>Одежда во время выполнения упражнений должна быть легкой, не стесняющей движений.</item>
+    </string-array>
+</resources>
