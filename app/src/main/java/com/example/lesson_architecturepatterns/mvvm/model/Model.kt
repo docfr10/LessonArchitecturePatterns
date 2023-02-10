@@ -4,14 +4,17 @@ import androidx.lifecycle.MutableLiveData
 import java.util.*
 
 class Model {
-    private val arrayList = arrayOf(
-        "Не выполняйте упражнения через боль!", "Если Вы устали сделайте перерыв.",
-        "Одежда во время выполнения упражнений должна быть легкой, не стесняющей движений."
-    )
-    private var millisStart= MutableLiveData<Long>().apply { postValue(12000) } //Время отдыха
+    private val arrayList = arrayListOf<RecommendationsModel>()
+    private var millisStart = MutableLiveData<Long>().apply { postValue(12000) } //Время отдыха
     private var millisLeft: MutableLiveData<Long> = millisStart //Время, оставщееся до конца отдыха
 
-    fun getRecommendations(): String {
+    init {
+        arrayList.add(RecommendationsModel("Не выполняйте упражнения через боль!"))
+        arrayList.add(RecommendationsModel("Если Вы устали сделайте перерыв."))
+        arrayList.add(RecommendationsModel("Одежда во время выполнения упражнений должна быть легкой, не стесняющей движений."))
+    }
+
+    fun getRecommendations(): RecommendationsModel {
         val random = Random()
         val index = random.nextInt(arrayList.size)
         return arrayList[index]

@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import android.os.CountDownTimer
 import android.widget.TextView
 import com.example.lesson_architecturepatterns.mvvm.model.Model
+import com.example.lesson_architecturepatterns.mvvm.model.RecommendationsModel
 
 class ViewModel {
     private val model = Model()
@@ -56,7 +57,7 @@ class ViewModel {
         sound.pause()
     }
 
-    fun getRecommendations(): String {
+    fun getRecommendations(): RecommendationsModel {
         return model.getRecommendations()
     }
 }

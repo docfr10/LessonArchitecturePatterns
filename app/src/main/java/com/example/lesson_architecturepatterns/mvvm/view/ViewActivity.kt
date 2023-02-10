@@ -22,7 +22,11 @@ class ViewActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         soundOfStop = MediaPlayer.create(this, R.raw.sound_of_stop)
-        binding.recommendationsTextView.text = viewModel.getRecommendations()
+        updateRecommendations()
+    }
+
+    private fun updateRecommendations() {
+        binding.recommendationsTextView.text = viewModel.getRecommendations().recommendations
     }
 
     override fun onResume() {
