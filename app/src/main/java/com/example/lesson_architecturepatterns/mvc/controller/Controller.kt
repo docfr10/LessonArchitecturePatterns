@@ -1,16 +1,19 @@
-package com.example.lesson_architecturepatterns.mvvm.viewmodel
+package com.example.lesson_architecturepatterns.mvc.controller
 
 import android.media.MediaPlayer
 import android.os.CountDownTimer
 import android.widget.TextView
-import androidx.lifecycle.ViewModel
-import com.example.lesson_architecturepatterns.mvvm.model.Model
-import com.example.lesson_architecturepatterns.mvvm.model.RecommendationsModel
+import com.example.lesson_architecturepatterns.mvc.model.Model
+import com.example.lesson_architecturepatterns.mvc.view.ViewActivity
 
-
-class ViewModel : ViewModel() {
-    private val model = Model()
+class Controller {
+    private val model: Model = Model()
+    private var view: ViewActivity? = null
     private var timer: CountDownTimer? = null // Таймер
+
+    fun attachView(viewActivity: ViewActivity) {
+        this.view = viewActivity
+    }
 
     // Запуск и проверка таймера на окончание
     private fun timerStart(
@@ -41,12 +44,12 @@ class ViewModel : ViewModel() {
 
     // Воспроизведение таймера с того момента когда он остановился
     fun timerResume(timerTextView: TextView, soundOfStop: MediaPlayer) {
-        timerStart(model.getMillisLeft().value!!, timerTextView, soundOfStop)
+        timerStart(model.getMillisLeft(), timerTextView, soundOfStop)
     }
 
     fun plus30Sec(millisPlus: Int, timerTextView: TextView, soundOfStop: MediaPlayer) {
         timer?.cancel()
-        timerStart(model.getMillisLeft().value!! + millisPlus, timerTextView, soundOfStop)
+        timerStart(model.getMillisLeft() + millisPlus, timerTextView, soundOfStop)
     }
 
     // Проигрывание звука
@@ -59,7 +62,7 @@ class ViewModel : ViewModel() {
         sound.pause()
     }
 
-    fun getRecommendations(): RecommendationsModel {
+    fun getRecommendations(): String {
         return model.getRecommendations()
     }
 }

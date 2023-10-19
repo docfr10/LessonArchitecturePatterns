@@ -1,12 +1,11 @@
-package com.example.lesson_architecturepatterns.mvvm.view
+package com.example.lesson_architecturepatterns.mvc.view
 
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.lesson_architecturepatterns.R
 import com.example.lesson_architecturepatterns.databinding.ActivityMvpBinding
-import com.example.lesson_architecturepatterns.mvvm.viewmodel.ViewModel
+import com.example.lesson_architecturepatterns.mvc.controller.Controller
 
 class ViewActivity : AppCompatActivity() {
     private lateinit var soundOfStop: MediaPlayer // Звук, оповещающий об окончании отдыха
@@ -14,35 +13,30 @@ class ViewActivity : AppCompatActivity() {
     private var plus30Sec: Int = 30000
 
     private lateinit var binding: ActivityMvpBinding
-    private lateinit var viewModel: ViewModel
+    private val controller: Controller = Controller()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMvpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val provider = ViewModelProvider(this)
-        viewModel = provider[ViewModel::class.java]
-
         soundOfStop = MediaPlayer.create(this, R.raw.sound_of_stop)
-        updateRecommendations()
-    }
-
-    private fun updateRecommendations() {
-        binding.recommendationsTextView.text = viewModel.getRecommendations().recommendations
+        controller.attachView(this)
+        binding.recommendationsTextView.text = controller.getRecommendations()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.timerResume(binding.timerTextViewRest, soundOfStop)
+        controller.timerResume(binding.timerTextViewRest, soundOfStop)
         binding.plus30secButton.setOnClickListener { plus30Sec(plus30Sec) }
         binding.nextButton2.setOnClickListener { nextButtonClicked() }
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.timerPause()
-        viewModel.soundPause(soundOfStop)
+        controller.timerPause()
+        controller.soundPause(soundOfStop)
     }
 
     private fun nextButtonClicked() {
@@ -50,6 +44,6 @@ class ViewActivity : AppCompatActivity() {
     }
 
     private fun plus30Sec(millisPlus: Int) {
-        viewModel.plus30Sec(millisPlus, binding.timerTextViewRest, soundOfStop)
+        controller.plus30Sec(millisPlus, binding.timerTextViewRest, soundOfStop)
     }
 }

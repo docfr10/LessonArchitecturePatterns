@@ -1,8 +1,8 @@
 package com.example.lesson_architecturepatterns
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.lesson_architecturepatterns.databinding.ActivityMainBinding
 import com.example.lesson_architecturepatterns.mvp.view.ViewActivity
 
@@ -12,6 +12,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.buttonMVC.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@MainActivity,
+                    com.example.lesson_architecturepatterns.mvc.view.ViewActivity::class.java
+                )
+            )
+        }
         binding.buttonMVP.setOnClickListener {
             startActivity(
                 Intent(
@@ -24,10 +33,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     this@MainActivity,
-                    ViewActivity::class.java
+                    com.example.lesson_architecturepatterns.mvvm.view.ViewActivity::class.java
                 )
             )
         }
-        setContentView(binding.root)
     }
 }

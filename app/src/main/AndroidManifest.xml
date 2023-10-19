@@ -12,7 +12,10 @@
         android:theme="@style/Theme.LessonArchitecturePatterns"
         tools:targetApi="31">
         <activity
-            android:name=".ViewActivity"
+            android:name=".mvc.view.ViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".mvvm.view.ViewActivity"
             android:exported="false" />
         <activity
             android:name=".mvp.view.ViewActivity"
