@@ -3,10 +3,12 @@ package com.example.lesson_architecturepatterns.mvvm.view
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.lesson_architecturepatterns.R
 import com.example.lesson_architecturepatterns.databinding.ActivityMvpBinding
 import com.example.lesson_architecturepatterns.mvvm.viewmodel.ViewModel
+import java.util.Locale
 
 class ViewActivity : AppCompatActivity() {
     private lateinit var soundOfStop: MediaPlayer // Звук, оповещающий об окончании отдыха
@@ -24,12 +26,25 @@ class ViewActivity : AppCompatActivity() {
         val provider = ViewModelProvider(this)
         viewModel = provider[ViewModel::class.java]
 
+        viewModel = ViewModelProvider(this)[ViewModel::class.java]
+
         soundOfStop = MediaPlayer.create(this, R.raw.sound_of_stop)
-        updateRecommendations()
+
+        // Наблюдение за LiveData
+        viewModel.millisLeft.observe(this, Observer { millis ->
+            binding.timerTextViewRest.text = formatMillis(millis)
+        })
+
+        // Наблюдение за LiveData
+        viewModel.recommendations.observe(this, Observer { recommendation ->
+            binding.recommendationsTextView.text = recommendation.recommendations
+        })
     }
 
-    private fun updateRecommendations() {
-        binding.recommendationsTextView.text = viewModel.getRecommendations().recommendations
+    private fun formatMillis(millis: Long): String {
+        val minutes = (millis / 1000) / 60
+        val seconds = (millis / 1000) % 60
+        return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
     }
 
     override fun onResume() {
