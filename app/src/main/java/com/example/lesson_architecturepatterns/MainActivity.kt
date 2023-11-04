@@ -37,5 +37,13 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+        binding.buttonWithout.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@MainActivity,
+                    com.example.lesson_architecturepatterns.without.Activity::class.java
+                )
+            )
+        }
     }
 }
