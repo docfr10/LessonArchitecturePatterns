@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.lesson_architecturepatterns.R
 import com.example.lesson_architecturepatterns.databinding.ActivityMvpBinding
 import com.example.lesson_architecturepatterns.mvc.controller.Controller
+import com.example.lesson_architecturepatterns.mvc.model.Model
 
 class ViewActivity : AppCompatActivity() {
     private lateinit var soundOfStop: MediaPlayer // Звук, оповещающий об окончании отдыха
@@ -14,6 +15,7 @@ class ViewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMvpBinding
     private val controller: Controller = Controller()
+    private val model: Model = Model()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +25,7 @@ class ViewActivity : AppCompatActivity() {
 
         soundOfStop = MediaPlayer.create(this, R.raw.sound_of_stop)
         controller.attachView(this)
-        binding.recommendationsTextView.text = controller.getRecommendations()
+        binding.recommendationsTextView.text = model.getRecommendations()
     }
 
     override fun onResume() {

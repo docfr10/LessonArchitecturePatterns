@@ -61,8 +61,4 @@ class Controller {
     fun soundPause(sound: MediaPlayer) {
         sound.pause()
     }
-
-    fun getRecommendations(): String {
-        return model.getRecommendations()
-    }
 }
