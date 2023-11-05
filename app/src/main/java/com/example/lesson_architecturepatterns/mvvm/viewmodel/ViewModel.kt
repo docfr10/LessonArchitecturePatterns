@@ -75,8 +75,4 @@ class ViewModel : ViewModel() {
     fun soundPause(sound: MediaPlayer) {
         sound.pause()
     }
-
-    fun getRecommendations(): RecommendationsModel {
-        return model.getRecommendations()
-    }
 }
